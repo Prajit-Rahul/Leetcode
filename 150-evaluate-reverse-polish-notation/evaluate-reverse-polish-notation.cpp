@@ -20,6 +20,6 @@ public:
             st.push(stoll(it)); 
         }
         }
-        return static_cast<int>(st.top());
+        return st.top();
     }
 };
