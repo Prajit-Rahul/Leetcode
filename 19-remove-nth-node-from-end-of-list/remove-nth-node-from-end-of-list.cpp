@@ -18,7 +18,7 @@ public:
             temp = temp->next;
         }
         int count = total - n - 1;
-        if(count < 0) return head->next;
+        if(total == n) return head->next;
         temp = head;
         while(count--){
             temp = temp->next;
