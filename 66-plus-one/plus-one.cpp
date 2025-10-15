@@ -1,22 +1,23 @@
 class Solution {
 public:
-    vector<int> plusOne(vector<int>& digits) {
-        int n = digits.size();
-        int carry = 1;
-        vector<int> ans;
-        while(n--){
-            int num = digits[n] + carry;
-            if(num > 9){
-                num = num%10;
-                carry = 1;
+    vector<int> plusOne(vector<int>& v) {
+        int n = v.size();
+        int i = n;
+        while(i--){
+            if(i == n-1){
+                v[i]++;
             }
-            else{
-                carry = 0;
+            if(v[i] == 10){
+                v[i] = 0;
+                if(i != 0){
+                    v[i-1]++;
+                }
+                else{
+                    v.push_back(0);
+                    v[i] = 1;
+                }
             }
-            ans.push_back(num);
         }
-        if(carry > 0) ans.push_back(carry);
-        reverse(ans.begin(), ans.end());
-        return ans;
+        return v;
     }
 };
