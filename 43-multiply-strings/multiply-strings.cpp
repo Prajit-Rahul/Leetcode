@@ -16,9 +16,9 @@ public:
                 
             }
         }
-        while (res.size() > 1 && res.back() == 0) res.pop_back();
-        reverse(res.begin(), res.end());
         for(int i=0; i<res.size(); i++) cout<<res[i]<<" ";
+        if(res.size() > 1 && res.back() == 0) res.pop_back();
+        reverse(res.begin(), res.end());
         string ans;
         for (int num : res)
             ans.push_back(num+'0'); 
