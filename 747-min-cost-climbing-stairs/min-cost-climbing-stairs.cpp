@@ -1,7 +1,7 @@
 class Solution {
 public:
     int recc(vector<int> &cost, int i, vector<int> &dp){
-        if(i < 0) return 0;
+        // if(i < 0) return 0;
         if(i == 0 || i == 1) return cost[i];
         if(dp[i] != -1) return dp[i];
         return dp[i] = cost[i] + min(recc(cost, i-1, dp), recc(cost, i-2, dp));
