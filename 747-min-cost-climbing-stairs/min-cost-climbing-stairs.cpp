@@ -4,7 +4,7 @@ public:
         if(i >= cost.size()){
             return 0;
         }
-        if(dp[i+1] != -1) return dp[i];
+        if(dp[i] != -1) return dp[i];
         int left = recc(cost, i+1, dp) + cost[i];
         int right = recc(cost, i+2, dp) + cost[i];
         return dp[i] = min(left,right);
