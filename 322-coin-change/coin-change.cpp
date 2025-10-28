@@ -67,7 +67,7 @@ public:
     }
     int coinChange(vector<int>& coins, int amount) {
         int n = coins.size();
-        vector<int> dp(amount+1, INT_MAX);
+        vector<int> dp(amount+1, 0);
         dp[0] = 0;
         for(int amt=1; amt<=amount; amt++){
             int len = INT_MAX;
