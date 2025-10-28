@@ -35,6 +35,26 @@ public:
     //     }
     //     return dp[n-1][amount] >= INF?-1:dp[n-1][amount];
     // }
+    int coinChange(vector<int>& coins, int amount) {
+        int n = coins.size();
+        const int INF = 1e9;
+        vector<int> curr(amount+1, 0), prev(amount+1, 0);
+        vector<vector<int>> dp(n+1, vector<int>(amount+1, 0));
+        for(int i=0; i<=amount; i++){
+            if(i % coins[0] == 0) prev[i] = i/coins[0];
+            else prev[i] = INF;
+        }
+        for(int ind=1; ind<n; ind++){
+            for(int amt = 1; amt <= amount; amt++){
+                int ntake = prev[amt];
+                int take = INF;
+                if(amt >= coins[ind]) take = 1 + curr[amt-coins[ind]];
+                curr[amt] = min(take, ntake);
+            }
+            prev = curr;
+        }
+        return prev[amount] >= INF?-1:prev[amount];
+    }
     // int recc(vector<int> &coins, int amount, vector<int> &dp){
     //     int len = INT_MAX;
     //     if(amount <= 0) return 0;
@@ -53,32 +73,20 @@ public:
     //     int ans = recc(coins, amount, dp);
     //     return ans >= INT_MAX?-1:ans;
     // }
-    int recc(vector<int> &coins, int amount, vector<int> &dp){
-        int len = INT_MAX;
-        if(amount <= 0) return 0;
-        if(dp[amount] != -1) return dp[amount];
-        for(auto &it: coins){
-            if(amount - it >= 0){
-                int res = recc(coins, amount-it, dp);
-                if(res < INT_MAX) len = min(1 + res, len);
-            } 
-        }
-        return dp[amount] = len;
-    }
-    int coinChange(vector<int>& coins, int amount) {
-        int n = coins.size();
-        vector<int> dp(amount+1, 0);
-        dp[0] = 0;
-        for(int amt=1; amt<=amount; amt++){
-            int len = INT_MAX;
-            for(auto &it: coins){
-            if(amt - it >= 0){
-                int res = dp[amt-it];
-                if(res < INT_MAX) len = min(1 + res, len);
-            } 
-            dp[amt] = len;
-        }
-        }
-        return dp[amount] >= INT_MAX?-1:dp[amount];
-    }
+    // int coinChange(vector<int>& coins, int amount) {
+    //     int n = coins.size();
+    //     vector<int> dp(amount+1, 0);
+    //     dp[0] = 0;
+    //     for(int amt=1; amt<=amount; amt++){
+    //         int len = INT_MAX;
+    //         for(auto &it: coins){
+    //         if(amt - it >= 0){
+    //             int res = dp[amt-it];
+    //             if(res < INT_MAX) len = min(1 + res, len);
+    //         } 
+    //         dp[amt] = len;
+    //     }
+    //     }
+    //     return dp[amount] >= INT_MAX?-1:dp[amount];
+    // }
 };
