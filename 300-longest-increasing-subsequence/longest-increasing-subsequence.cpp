@@ -40,16 +40,32 @@ public:
     //     }
     //     return next[0];
     // }
+    // int lengthOfLIS(vector<int>& nums) {
+    //     int n = nums.size();
+    //     vector<int> dp(n+1, 1);
+    //     int maxi = 1;
+    //     for(int ind=0; ind<=n-1; ind++){
+    //         for(int prev=0; prev<ind; prev++){
+    //             if(nums[ind] > nums[prev]){
+    //                 dp[ind] = max(dp[ind], dp[prev] + 1);
+    //                 maxi = max(dp[ind], maxi);
+    //             }
+    //         }
+    //     }
+    //     return maxi;
+    // }
     int lengthOfLIS(vector<int>& nums) {
         int n = nums.size();
-        vector<int> dp(n+1, 1);
-        int maxi = 1;
+        vector<int> sub;
+        int maxi = 0;
         for(int ind=0; ind<=n-1; ind++){
-            for(int prev=0; prev<ind; prev++){
-                if(nums[ind] > nums[prev]){
-                    dp[ind] = max(dp[ind], dp[prev] + 1);
-                    maxi = max(dp[ind], maxi);
-                }
+            if(sub.size() == 0 || sub.back() < nums[ind]){
+                sub.push_back(nums[ind]);
+                maxi++;
+            }
+            else{
+                auto it = lower_bound(sub.begin(), sub.end(), nums[ind]);
+                *it = nums[ind];
             }
         }
         return maxi;
