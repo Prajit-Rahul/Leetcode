@@ -14,18 +14,33 @@ public:
     //     vector<vector<int>> dp(n, vector<int>(m, -1));
     //     return recc(text1, text2, n-1, m-1, dp);
     // }
+    // int longestCommonSubsequence(string text1, string text2) {
+    //     int n = text1.size(), m = text2.size();
+    //     vector<vector<int>> dp(n+1, vector<int>(m+1, 0));
+    //     for(int i=0; i<n; i++){
+    //         for(int j=0; j<m; j++){
+    //             int btake = 0;
+    //             if(text1[i] == text2[j]) btake = 1 + dp[i][j];
+    //             int take1 = dp[i][j+1];
+    //             int take2 = dp[i+1][j];
+    //             dp[i+1][j+1] = max({btake, take1, take2});
+    //         }
+    //     }
+    //     return dp[n][m];
+    // }
     int longestCommonSubsequence(string text1, string text2) {
         int n = text1.size(), m = text2.size();
-        vector<vector<int>> dp(n+1, vector<int>(m+1, 0));
+        vector<int> prev(m+1, 0),curr(m+1, 0);
         for(int i=0; i<n; i++){
             for(int j=0; j<m; j++){
                 int btake = 0;
-                if(text1[i] == text2[j]) btake = 1 + dp[i][j];
-                int take1 = dp[i][j+1];
-                int take2 = dp[i+1][j];
-                dp[i+1][j+1] = max({btake, take1, take2});
+                if(text1[i] == text2[j]) btake = 1 + prev[j];
+                int take1 = prev[j+1];
+                int take2 = curr[j];
+                curr[j+1] = max({btake, take1, take2});
             }
+            prev = curr;
         }
-        return dp[n][m];
+        return prev[m];
     }
 };
