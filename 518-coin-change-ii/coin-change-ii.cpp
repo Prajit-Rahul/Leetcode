@@ -23,7 +23,7 @@ public:
         // }
         for(int ind=0; ind<=n-1; ind++){
             for(int amt=0; amt<=amount; amt++){
-                if(ind == 0 && amt%coins[0] == 0) dp[ind][amt] = 1;
+                if(ind == 0 && amt == 0) dp[ind][amt] = 1;
                 else{
                     if(amt >= coins[ind]) dp[ind][amt] = dp[ind][amt-coins[ind]];
                     if(ind > 0) dp[ind][amt] += dp[ind-1][amt];
