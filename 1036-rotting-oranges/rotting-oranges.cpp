@@ -24,7 +24,7 @@ public:
             for(int i=0; i<4; i++){
                 int nr = r + dr[i];
                 int nc = c + dc[i];
-                if(nr < 0 || nr >= n || nc < 0 || nc >= m || vis[nr][nc] || grid[nr][nc] != 1) continue;
+                if(nr < 0 || nr >= n || nc < 0 || nc >= m || grid[nr][nc] != 1) continue;
                 q.push({time+1, {nr, nc}});
                 vis[nr][nc] = 1;
                 grid[nr][nc] = 2;
