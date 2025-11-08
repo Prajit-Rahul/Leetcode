@@ -17,8 +17,8 @@ public:
             for(int j=0; j<26; j++){
                 word[i] = 'a'+j;
                 if(word[i] == c) continue;
-                if(mp[word]){
-                    mp[word]--;
+                if(mp.find(word) != mp.end()){
+                    mp.erase(word);
                     q.push({len+1, word});
                 }
             }
