@@ -12,15 +12,9 @@
 class Solution {
 public:
     bool isSameTree(TreeNode* p, TreeNode* q) {
-        if(!p && !q) return true; 
-        else if((!p && q) || (!q && p)) return false;
-        return ((p->val == q->val) && isSameTree(p->left, q->left) && isSameTree(p->right, q->right));
+        if(!p && !q) return true;
+        if(!p || !q) return false;
+        if(p->val != q->val) return false;
+        return (isSameTree(p->left, q->left)) && (isSameTree(p->right, q->right));
     }
-    // bool dfs(TreeNode* p, TreeNode* q){
-    //     if(p && q && p->val != q->val) return false;
-    //     if(dfs(p->left, q->left) == false) return false;
-    //     if(dfs(p->right, q->right) == false) return false;
-    //     return true;
-        
-    // }
 };
