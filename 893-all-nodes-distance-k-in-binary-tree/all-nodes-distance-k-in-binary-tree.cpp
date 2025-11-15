@@ -28,22 +28,30 @@ public:
     vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
         vector<int> ans;
         queue<TreeNode *> q;
-        q.push({target});
+        q.push(target);
         unordered_map<TreeNode *, TreeNode *> parent;
         parent_update(root, parent);
         unordered_map<TreeNode *, bool> visited;
         int count = 0;
+        visited[target] = true;
         if(k == 0) return {target->val}; 
         while(!q.empty()){
             int n = q.size();
             for(int i=0; i<n; i++){
             TreeNode *node = q.front();
             q.pop();
-            if(visited[node]) continue;
-            visited[node] = true;
-            if(node->left) q.push(node->left);
-            if(node->right) q.push(node->right);
-            if(parent.find(node) != parent.end()) q.push(parent[node]);
+            if(node->left && !visited[node->left]) {
+                q.push(node->left);
+                visited[node->left] = true;
+            }
+            if(node->right && !visited[node->right]){
+                q.push(node->right);
+                visited[node->right] = true;
+            }
+            if(parent.find(node) != parent.end() && !visited[parent[node]]){
+                q.push(parent[node]);
+                visited[parent[node]] = true;
+            }
             }
             count++;
             if(count == k) break;
@@ -51,7 +59,6 @@ public:
         while(!q.empty()){
             TreeNode *node = q.front();
             q.pop();
-            if(visited[node]) continue;
             ans.push_back(node->val);
         }
         return ans;
