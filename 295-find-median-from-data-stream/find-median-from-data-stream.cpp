@@ -7,9 +7,9 @@ public:
     }
     
     void addNum(int num) {
-         if(maxHeap.size() == 0 || maxHeap.top() > num){
+        if(maxHeap.empty() || num < maxHeap.top()){
             maxHeap.push(num);
-        }  
+        }
         else{
             minHeap.push(num);
         }
