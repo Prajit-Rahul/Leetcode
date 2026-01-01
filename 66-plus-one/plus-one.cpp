@@ -2,31 +2,22 @@ class Solution {
 public:
     vector<int> plusOne(vector<int>& digits) {
         int n = digits.size();
-        int carry = 1;
-        vector<int> ans;
-        int i=0;
-        if(digits[n-1] == 9){
-            for(i=n-1; i>=0; i--){
-            if(digits[i] == 9){
-                carry = 1;
-                digits[i] = 0;
-            }
-            else{
-                carry = 0;
+        int i = n;
+        while(i--){
+            if(i == n-1){
                 digits[i]++;
-                break;
             }
+            if(digits[i] == 10){
+                digits[i] = 0;
+                if(i == 0){
+                    digits[i] = 1;
+                    digits.push_back(0);
+                }
+                else{
+                    digits[i-1]++;
+                }
             }
         }
-        else{
-            digits[n-1]++;
-        }
-        if(i == -1 && carry == 1){
-            ans.push_back(1);
-        }
-        for(auto &it: digits){
-            ans.push_back(it);
-        }
-        return ans;
+        return digits;
     }
 };
