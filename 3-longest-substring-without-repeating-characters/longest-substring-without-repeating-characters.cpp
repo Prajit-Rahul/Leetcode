@@ -28,8 +28,8 @@ public:
             if(mp.find(s[r]) != mp.end()){
                 l =  max(l, mp[s[r]] + 1);
             }
-            maxLen = max(maxLen, r - l + 1);
             mp[s[r]] = r;
+            maxLen = max(maxLen, r - l + 1);
             r++;
         }
         return maxLen;
