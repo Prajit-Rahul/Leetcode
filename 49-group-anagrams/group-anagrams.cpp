@@ -24,17 +24,56 @@ public:
     //     }
     //     return ans;
     // }
+    // vector<vector<string>> groupAnagrams(vector<string>& strs) {
+    //     unordered_map<string, vector<string>> v;
+    //     for(auto &str: strs){
+    //         string key = str;
+    //         sort(key.begin(), key.end());
+    //         v[key].push_back(str);
+    //     }
+    //     vector<vector<string>> result;
+    //     for(auto &it: v){
+    //         result.push_back(it.second);
+    //     }
+    //     return result;
+    // }
+    // vector<vector<string>> groupAnagrams(vector<string>& strs) {
+    //     unordered_map<string, vector<string>> v;
+    //     for(auto &str: strs){
+    //         vector<int> freq(26, 0);
+    //         for(auto &ch: str){
+    //             freq[ch - 'a']++;
+    //         }
+    //         string key;
+    //         for(auto &f: freq){
+    //             key += "#" + to_string(f);
+    //         }
+    //         v[key].push_back(str);
+    //     }
+    //     vector<vector<string>> result;
+    //     for(auto &it: v){
+    //         result.push_back(it.second);
+    //     }
+    //     return result;
+    // }
     vector<vector<string>> groupAnagrams(vector<string>& strs) {
-        unordered_map<string, vector<string>> v;
+        vector<vector<string>> ans;
+        unordered_map<string, vector<string>> mp;
         for(auto &str: strs){
-            string key = str;
-            sort(key.begin(), key.end());
-            v[key].push_back(str);
+            vector<int> freq(26, 0);
+            for(auto &it: str){
+                freq[it - 'a']++;
+            }
+            string s = "";
+            for(auto &it: freq){
+                s += "#";
+                s += it; 
+            }
+            mp[s].push_back(str);
         }
-        vector<vector<string>> result;
-        for(auto &it: v){
-            result.push_back(it.second);
+        for(auto &it: mp){
+            ans.push_back(it.second);
         }
-        return result;
+        return ans;
     }
 };
