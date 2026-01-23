@@ -20,18 +20,31 @@ public:
     //     }
     //     return maxLen;
     // }
+    // int lengthOfLongestSubstring(string s) {
+    //     int l = 0, r = 0, maxLen = 0;
+    //     int n = s.length();
+    //     unordered_map<char, int> mp;
+    //     while(r<n){
+    //         if(mp.find(s[r]) != mp.end()){
+    //             l =  max(l, mp[s[r]] + 1);
+    //         }
+    //         mp[s[r]] = r;
+    //         maxLen = max(maxLen, r - l + 1);
+    //         r++;
+    //     }
+    //     return maxLen;
+    // }
     int lengthOfLongestSubstring(string s) {
-        int l = 0, r = 0, maxLen = 0;
-        int n = s.length();
-        unordered_map<char, int> mp;
+        int l = 0, r = 0, n = s.length(), ans = 0;
+        unordered_map<char,int> mp;
         while(r<n){
             if(mp.find(s[r]) != mp.end()){
-                l =  max(l, mp[s[r]] + 1);
+                l = max(l, mp[s[r]]+1);
             }
+            ans = max(ans, r-l+1);
             mp[s[r]] = r;
-            maxLen = max(maxLen, r - l + 1);
             r++;
-        }
-        return maxLen;
+        }        
+        return ans;
     }
 };
