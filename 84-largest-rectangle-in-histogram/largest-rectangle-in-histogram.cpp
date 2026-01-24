@@ -5,7 +5,7 @@ public:
         vector<int> ps(n, -1);
         stack<int> st;
         for(int i=0; i<n; i++){
-            while(!st.empty() && heights[st.top()] > heights[i]){
+            while(!st.empty() && heights[st.top()] >= heights[i]){
                 st.pop();
             }
             ps[i] = (st.empty())?-1:st.top();
