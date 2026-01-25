@@ -10,6 +10,14 @@
  */
 class Solution {
 public:
+    ListNode *reverse(ListNode *head){
+        if(!head || !head->next) return head;
+        ListNode *newHead = reverse(head->next);
+        ListNode *front = head->next;
+        front->next = head;
+        head->next = NULL;
+        return newHead;
+    }
     void reorderList(ListNode* head) {
         if(!head || !head->next) return;
         ListNode *slow = head, *fast = head->next;
@@ -17,23 +25,21 @@ public:
             slow = slow->next;
             fast = fast->next->next;
         }
-        ListNode *curr = slow->next, *next = NULL, *prev = NULL;
+        ListNode *second = reverse(slow->next), *temp = head;
         slow->next = NULL;
-        while(curr){
-            next = curr->next;
-            curr->next = prev;
-            prev = curr;
-            curr = next;
-        }
-        ListNode *fnext = NULL, *snext = NULL, *temp = prev;
-        slow = head;
-        while(slow && temp){
-            fnext = slow->next;
-            snext = temp->next;
-            slow->next = temp;
-            temp->next = fnext;
-            slow = fnext;
-            temp = snext;
+        ListNode *newHead = new ListNode();
+        ListNode *start = newHead;
+        while(temp || second){
+            if(temp){
+                newHead->next = temp;
+                temp = temp->next;
+                newHead = newHead->next;
+            }
+            if(second){
+                newHead->next = second;
+                second = second->next;
+                newHead = newHead->next;
+            }
         }
     }
 };
