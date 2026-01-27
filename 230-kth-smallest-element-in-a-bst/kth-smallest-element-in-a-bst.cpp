@@ -17,7 +17,7 @@ public:
         dfs(root->left, k);
         k--;
         if(k == 0){
-            maxi = max(root->val, k);
+            maxi = root->val;
         }
         dfs(root->right, k);
     }
