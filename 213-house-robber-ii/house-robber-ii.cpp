@@ -1,25 +1,23 @@
 class Solution {
 public:
+    int recc(vector<int> &nums, int n, vector<int> &dp){
+        if(n < 0) return 0;
+        if(dp[n] != -1) return dp[n];
+        int take = recc(nums, n-1, dp);
+        int ntake = recc(nums, n-2, dp) + nums[n];
+        return dp[n] = max(take, ntake);
+    }
     int rob(vector<int>& nums) {
         int n = nums.size();
-        if(n==1) return nums[0];
-        if (n == 2) return max(nums[0], nums[1]);
-        int prev1 = 0, prev2 = nums[0];
-        for(int i=1; i<n-1; i++){
-            int take = nums[i];
-            if(i-2>=0) take += prev1;
-            int ntake = prev2;
-            prev1 = prev2;
-            prev2 = max(take, ntake);
+        if(n == 1) return nums[0];
+        vector<int> temp1, temp2;
+        for(int i=0; i<n; i++){
+            if(i != 0) temp1.push_back(nums[i]);
+            if(i != n-1) temp2.push_back(nums[i]);
         }
-        int prev3 = 0, prev4 = nums[1];
-        for(int i=2; i<n; i++){
-            int take = nums[i];
-            if(i-2>=0) take += prev3;
-            int ntake = prev4;
-            prev3 = prev4;
-            prev4 = max(take, ntake);
-        }
-        return max(prev2, prev4);
+        vector<int> dp(n,-1), dp1(n, -1);
+        int f = recc(temp1, n-2, dp);
+        int l = recc(temp2, n-2, dp1);
+        return max(l,f);
     }
 };
