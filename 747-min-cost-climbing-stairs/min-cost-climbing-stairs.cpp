@@ -1,16 +1,11 @@
 class Solution {
 public:
-    int recc(vector<int>& cost, int ind, vector<int> &dp){
-        if(ind <= 1){
-            if(ind == 0 || ind == 1)
-                return cost[ind];
-            return 0;
-        }
-        if(dp[ind] != -1) return dp[ind];
-        int take1 = recc(cost, ind-1, dp);
-        int take2 = recc(cost, ind-2, dp);
-        if(ind == cost.size()) return min(take1, take2);
-        return dp[ind] = min(take1, take2) + cost[ind];
+    int recc(vector<int> &cost, int n, vector<int> &dp){
+        if(n == 0 || n == 1) return 0;
+        if(dp[n] != -1) return dp[n];
+        int take1 = recc(cost, n-1, dp) + cost[n-1];
+        int take2 = recc(cost, n-2, dp) + cost[n-2];
+        return dp[n] = min(take1, take2);
     }
     int minCostClimbingStairs(vector<int>& cost) {
         int n = cost.size();
