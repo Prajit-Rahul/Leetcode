@@ -4,8 +4,7 @@ public:
         if(ind == s.length()) return true;
         if(dp[ind] != -1) return dp[ind];
         for(int i=ind; i<s.length(); i++){
-            string sub = s.substr(ind, i-ind+1);
-            if(st.count(sub) > 0 && recc(s, st, i+1, dp)) return dp[ind] = true;
+            if(st.count(s.substr(ind, i-ind+1)) > 0 && recc(s, st, i+1, dp)) return dp[ind] = true;
         }
         return dp[ind] = false;
     }
