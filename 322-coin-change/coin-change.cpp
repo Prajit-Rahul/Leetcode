@@ -46,7 +46,7 @@ public:
             else curr[i] = INF;
         }
         for(int ind=1; ind<n; ind++){
-            
+            curr[0] = 0;
             for(int amt=1; amt<=amount; amt++){
                 int ntake = curr[amt];
                 int take = INF;
