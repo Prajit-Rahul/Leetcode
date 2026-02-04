@@ -42,19 +42,19 @@ public:
         const int INF = 1e9;
         vector<int> prev(amount+1, 0), curr(amount+1, 0);
         for(int i=0; i<=amount; i++){
-            if(i % coins[0] == 0) prev[i] = i/coins[0];
-            else prev[i] = INF;
+            if(i % coins[0] == 0) curr[i] = i/coins[0];
+            else curr[i] = INF;
         }
         for(int ind=1; ind<n; ind++){
+            
             for(int amt=1; amt<=amount; amt++){
-                int ntake = prev[amt];
+                int ntake = curr[amt];
                 int take = INF;
                 if(coins[ind] <= amt) take = 1 + curr[amt - coins[ind]];
                 curr[amt] = min(take, ntake);
             }
-            prev = curr;
+            // prev = curr;
         }
-
-        return prev[amount] >= 1e9?-1:prev[amount];
+        return curr[amount] >= 1e9?-1:curr[amount];
     }
 };
