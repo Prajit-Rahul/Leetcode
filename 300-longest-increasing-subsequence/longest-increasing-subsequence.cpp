@@ -13,17 +13,31 @@ public:
     //     vector<vector<int>> dp(n+1, vector<int> (n+1, -1));
     //     return recc(nums, 0, -1, dp);
     // }
+    // int lengthOfLIS(vector<int>& nums) {
+    //     int n = nums.size();
+    //     vector<vector<int>> dp(n+1, vector<int> (n+1, 0));
+    //     for(int ind=n-1; ind>=0; ind--){
+    //         for(int prev = ind-1; prev >= -1; prev--){
+    //             int ntake = dp[ind+1][prev+1];
+    //             int take = INT_MIN;
+    //             if(prev == -1 || nums[ind] > nums[prev]) take = 1 + dp[ind+1][ind+1];
+    //             dp[ind][prev+1] = max(take, ntake);
+    //         }
+    //     }
+    //     return dp[0][0];
+    // }
     int lengthOfLIS(vector<int>& nums) {
         int n = nums.size();
-        vector<vector<int>> dp(n+1, vector<int> (n+1, 0));
+        vector<int> curr(n+1, 0), next(n+1, 0);
         for(int ind=n-1; ind>=0; ind--){
             for(int prev = ind-1; prev >= -1; prev--){
-                int ntake = dp[ind+1][prev+1];
+                int ntake = next[prev+1];
                 int take = INT_MIN;
-                if(prev == -1 || nums[ind] > nums[prev]) take = 1 + dp[ind+1][ind+1];
-                dp[ind][prev+1] = max(take, ntake);
+                if(prev == -1 || nums[ind] > nums[prev]) take = 1 + next[ind+1];
+                curr[prev+1] = max(take, ntake);
             }
+            next = curr;
         }
-        return dp[0][0];
+        return next[0];
     }
 };
