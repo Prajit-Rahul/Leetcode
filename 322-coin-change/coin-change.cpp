@@ -19,22 +19,42 @@ public:
     //     int ans = recc(coins, amount, n-1, dp);
     //     return ans == 1e9?-1:ans;
     // }
+    // int coinChange(vector<int>& coins, int amount) {
+    //     int n = coins.size();
+    //     const int INF = 1e9;
+    //     vector<vector<int>> dp(n+1, vector<int>(amount+1, 0));
+    //     for(int i=0; i<=amount; i++){
+    //         if(i % coins[0] == 0) dp[0][i] = i/coins[0];
+    //         else dp[0][i] = INF;
+    //     }
+    //     for(int ind=1; ind<n; ind++){
+    //         for(int amt=1; amt<=amount; amt++){
+    //             int ntake = dp[ind-1][amt];
+    //             int take = INF;
+    //             if(coins[ind] <= amt) take = 1 + dp[ind][amt - coins[ind]];
+    //             dp[ind][amt] = min(take, ntake);
+    //         }
+    //     }
+    //     return dp[n-1][amount] >= 1e9?-1:dp[n-1][amount];
+    // }
     int coinChange(vector<int>& coins, int amount) {
         int n = coins.size();
         const int INF = 1e9;
-        vector<vector<int>> dp(n+1, vector<int>(amount+1, 0));
+        vector<int> prev(amount+1, 0), curr(amount+1, 0);
         for(int i=0; i<=amount; i++){
-            if(i % coins[0] == 0) dp[0][i] = i/coins[0];
-            else dp[0][i] = INF;
+            if(i % coins[0] == 0) prev[i] = i/coins[0];
+            else prev[i] = INF;
         }
         for(int ind=1; ind<n; ind++){
             for(int amt=1; amt<=amount; amt++){
-                int ntake = dp[ind-1][amt];
+                int ntake = prev[amt];
                 int take = INF;
-                if(coins[ind] <= amt) take = 1 + dp[ind][amt - coins[ind]];
-                dp[ind][amt] = min(take, ntake);
+                if(coins[ind] <= amt) take = 1 + curr[amt - coins[ind]];
+                curr[amt] = min(take, ntake);
             }
+            prev = curr;
         }
-        return dp[n-1][amount] >= 1e9?-1:dp[n-1][amount];
+
+        return prev[amount] >= 1e9?-1:prev[amount];
     }
 };
