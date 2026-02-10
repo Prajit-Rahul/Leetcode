@@ -57,9 +57,25 @@ public:
         merge_sort(nums, mid+1, high);
         merge(nums, low, mid, high);
     }
+    void count_sort(vector<int> &nums){
+        vector<int> count(2 * 50000 + 1, 0);
+        for(int num: nums){
+            count[num + 50000]++;
+        }
+        int ind = 0;
+        for(int val=0; val<count.size(); val++){
+            int freq = count[val];
+            while(freq != 0){
+                nums[ind] = val - 50000;
+                ind++;
+                freq--;
+            }
+        }
+    }
     vector<int> sortArray(vector<int>& nums) {
         // quick_sort(nums, 0, nums.size()-1);
-        merge_sort(nums, 0, nums.size()-1);
+        // merge_sort(nums, 0, nums.size()-1);
+        count_sort(nums);
         return nums;
     }
 };
