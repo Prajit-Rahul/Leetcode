@@ -2,25 +2,24 @@ class Solution {
 public:
     int minCostConnectPoints(vector<vector<int>>& points) {
         int n = points.size();
-        int min_cost = 0;
         priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq;
-        vector<bool> visited(n, false);
-        unordered_map<int,int> cache;
         pq.push({0,0});
+        vector<int> vis(n, 0);
+        int min_cost = 0;
+        unordered_map<int, int> cache;
         while(!pq.empty()){
-            int u = pq.top().second;
-            int cost = pq.top().first;
+            auto [cost, node] = pq.top();
             pq.pop();
-            if(visited[u]) continue;
-            visited[u] = true;
+            if(vis[node]) continue;
+            vis[node] = 1;
             min_cost += cost;
             for(int v=0; v<n; v++){
-                if(!visited[v]){
-                    int dist = abs(points[u][0] - points[v][0]) + abs(points[u][1] - points[v][1]);
-                    if(cache.find(v) == cache.end() || dist < cache[v]){
+                if(!vis[v]){
+                    int dist = abs(points[v][0] - points[node][0]) + abs(points[v][1] - points[node][1]);
+                    if(cache.find(v) == cache.end() || cache[v] > dist){
                         cache[v] = dist;
                         pq.push({dist, v});
-                    }
+                    } 
                 }
             }
         }
