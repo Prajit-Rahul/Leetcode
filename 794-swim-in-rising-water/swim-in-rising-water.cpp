@@ -2,24 +2,24 @@ class Solution {
 public:
     int swimInWater(vector<vector<int>>& grid) {
         set<pair<int,int>> seen;
-        priority_queue<tuple<int,int,int>, vector<tuple<int,int,int>>, greater<tuple<int,int,int>>> q;
-        int n = grid.size();
-        q.push({grid[0][0], 0, 0});
-        int dr[4] = {0,1,0,-1};
-        int dc[4] = {-1,0,1,0};
+        vector<int> dr = {1,0,-1,0};
+        vector<int> dc = {0,-1,0,1};
+        int n = grid.size(), m = grid[0].size();
+        priority_queue<tuple<int,int,int>, vector<tuple<int,int,int>>, greater<tuple<int,int,int>>> pq;
+        pq.push({grid[0][0], 0, 0});
         int maxi = 0;
-        while(!q.empty()){
-            auto [val, i, j] = q.top();
-            q.pop();
-            if(seen.count({i,j})) continue;
-            seen.insert({i,j});
-            maxi = max(maxi, val);
-            if(i == n-1 && j == n-1) return maxi;
+        while(!pq.empty()){
+            auto [ht, i, j] = pq.top();
+            pq.pop();
+            if(seen.count({i, j})) continue;
+            seen.insert({i, j});
+            maxi = max(ht, maxi);
+            if(i == n-1 && j == m-1) return maxi;
             for(int k=0; k<4; k++){
-                int nr = i + dr[k];
-                int nc = j + dc[k];
-                if(nr < 0 || nc < 0 || nr >= n || nc >= n ) continue;
-                q.push({grid[nr][nc], nr, nc});
+                int r = i + dr[k];
+                int c = j + dc[k];
+                if(r < 0 || c < 0 || r >= n || c >= m) continue;
+                pq.push({max(ht, grid[r][c]), r, c});
             }
         }
         return maxi;
