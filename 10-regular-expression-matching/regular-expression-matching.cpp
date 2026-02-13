@@ -10,11 +10,8 @@ public:
         bool ans = false;
         if(match) ans |= recc(s, p, ind1+1, ind2+1, dp);
         if(ind2<m && p[ind2+1] == '*'){
-            if(match){
-                ans |= recc(s, p, ind1+1, ind2, dp);
-                ans |= recc(s, p, ind1+1, ind2+2, dp);
-            }
-            ans |= recc(s, p, ind1, ind2+2, dp);
+                ans |= (match && recc(s, p, ind1+1, ind2, dp));
+                ans |= recc(s, p, ind1, ind2+2, dp);
         }
         return dp[ind1][ind2] = ans;
     }
