@@ -1,19 +1,19 @@
 class Solution {
 public:
     int carFleet(int target, vector<int>& position, vector<int>& speed) {
-        vector<pair<int,int>> cars;
+        vector<pair<int,int>> v;
         int n = position.size();
-        for(int i=0; i<n; i++){
-            cars.push_back({target - position[i], speed[i]});
+        for(int i=0; i<position.size(); i++){
+            v.push_back({target - position[i], speed[i]});
         }
-        sort(cars.begin(), cars.end());
+        sort(v.begin(), v.end());
         int count = 0;
-        double maxVal = INT_MIN;
-        for(int i=0; i<n; i++){
-            double time = (double) cars[i].first / cars[i].second;
-            if(maxVal < time){
+        double currMax = 0;
+        for(auto &it: v){
+            double time = (double)it.first/it.second;
+            if(currMax < time){
                 count++;
-                maxVal = time;
+                currMax = time;
             }
         }
         return count;
