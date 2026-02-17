@@ -22,6 +22,6 @@ public:
                 l = mid + 1;
             }
         }
-        return ind;
+        return l;
     }
 };
