@@ -10,33 +10,33 @@
  */
 class Solution {
 public:
-    ListNode* add(ListNode* l1, ListNode* l2) {
-        ListNode *list1 = l1, *list2 = l2, *prev = NULL;
+    ListNode *add(ListNode* l1, ListNode* l2){
         int carry = 0;
-        while(list1){
-            int sum = carry + list1->val;
-            if(list2){
-                sum += list2->val;
-                list2 = list2->next;
+        ListNode *temp = l1, *prev = NULL;
+        while(l1){
+            int val = l1->val + carry;
+            if(l2){
+                val += l2->val;
+                l2 = l2->next;
             }
-            carry = sum/10;
-            sum %= 10;
-            list1->val = sum;
-            prev = list1;
-            list1 = list1->next;
+            carry = val/10;
+            val %= 10;
+            prev = l1;
+            l1->val = val;
+            l1 = l1->next;
         }
         if(carry){
             prev->next = new ListNode(carry);
         }
-        return l1;
+        return temp;
     }
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        ListNode *list1 = l1, *list2 = l2;
-        while(list1){
-            if(!list2) return add(l1, l2);
-            list1 = list1->next;
-            list2 = list2->next;
+        ListNode *temp1 = l1, *temp2 = l2;
+        while(temp2){
+            if(!temp1) return add(l2, l1);
+            temp1 = temp1->next;
+            temp2 = temp2->next;
         }
-        return add(l2, l1);
+        return add(l1, l2);
     }
 };
