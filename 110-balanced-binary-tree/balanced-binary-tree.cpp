@@ -23,17 +23,29 @@ public:
     //     height(root);
     //     return ans;
     // }
-    int height(TreeNode* root){
+    // int height(TreeNode* root){
+    //     if(!root) return 0;
+    //     int lh = height(root->left);
+    //     if(lh == -1) return -1;
+    //     int rh = height(root->right);
+    //     if(rh == -1) return -1;
+    //     if(abs(lh - rh) > 1) return -1;
+    //     return max(lh, rh)+1;
+    // }
+    // bool isBalanced(TreeNode* root) {
+    //     return height(root) == -1?false:true;
+    // }
+    int height(TreeNode *root){
         if(!root) return 0;
-        int lh = height(root->left);
-        if(lh == -1) return -1;
-        int rh = height(root->right);
-        if(rh == -1) return -1;
-        if(abs(lh - rh) > 1) return -1;
-        return max(lh, rh)+1;
+        int l = height(root->left);
+        if(l == -1) return -1;
+        int r = height(root->right);
+        if(r == -1) return -1;
+        if(abs(r-l) > 1) return -1;
+        return max(l, r) + 1;
     }
     bool isBalanced(TreeNode* root) {
-        return height(root) == -1?false:true;
+        return (height(root) == -1)?false:true;
     }
-
+    
 };
