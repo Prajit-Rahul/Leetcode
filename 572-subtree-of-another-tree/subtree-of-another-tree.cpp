@@ -11,16 +11,13 @@
  */
 class Solution {
 public:
-    bool tree(TreeNode* p, TreeNode *q){
-        if(!p || !q) return p==q;
-        return (p->val == q->val) && tree(p->left, q->left) && tree(p->right, q->right);
+    bool isSame(TreeNode *root, TreeNode *subRoot){
+        if(!root && !subRoot) return true;
+        if(!root || !subRoot) return false;
+        return root->val == subRoot->val && isSame(root->left, subRoot->left) && isSame(root->right, subRoot->right);
     }
     bool isSubtree(TreeNode* root, TreeNode* subRoot) {
-        bool ans;
         if(!root || !subRoot) return false;
-        if(root->val == subRoot->val) ans = tree(root, subRoot);
-        bool l = isSubtree(root->left, subRoot);
-        bool r = isSubtree(root->right, subRoot);
-        return l || r || ans;
+        return (root->val == subRoot->val && isSame(root, subRoot))|| isSubtree(root->left, subRoot) || isSubtree(root->right, subRoot);
     }
 };
