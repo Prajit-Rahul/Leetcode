@@ -11,27 +11,57 @@
  */
 class Solution {
 public:
-    void recc(TreeNode *root, vector<int> &ans){
-        if(!root) return;
-        if(root->left) recc(root->left, ans);
-        if(root->right) recc(root->right, ans);
-        ans.push_back(root->val);
-    }
-    vector<int> postorderTraversal(TreeNode* root) {
-        vector<int> ans;
-        recc(root, ans);
-        return ans;
-    }
+    // void recc(TreeNode *root, vector<int> &ans){
+    //     if(!root) return;
+    //     if(root->left) recc(root->left, ans);
+    //     if(root->right) recc(root->right, ans);
+    //     ans.push_back(root->val);
+    // }
     // vector<int> postorderTraversal(TreeNode* root) {
     //     vector<int> ans;
+    //     recc(root, ans);
+    //     return ans;
+    // }
+    // vector<int> postorderTraversal(TreeNode* root) {
+    //     vector<int> ans;
+    //     if(!root) return ans;
     //     stack<TreeNode *> st;
-    //     st.push(node);
+    //     st.push(root);
     //     while(!st.empty()){
     //         TreeNode *node = st.top();
     //         st.pop();
-    //         if(root->right) st.push(root->right);
-    //         if(root->left) st.push(root->left);
+    //         ans.push_back(node->val);
+    //         if(node->left) st.push(node->left);
+    //         if(node->right) st.push(node->right);
     //     }
+    //     reverse(ans.begin(), ans.end());
     //     return ans;
     // }
+    vector<int> postorderTraversal(TreeNode* root) {
+        stack<pair<TreeNode *, int>> st;
+        vector<int> in, post, pre;
+        if(!root) return post;
+        st.push({root,1});
+        while(!st.empty()){
+            TreeNode *node = st.top().first;
+            int num = st.top().second;
+            st.pop();
+            if(num == 1){
+                pre.push_back(node->val);
+                num++;
+                st.push({node, num});
+                if(node->left) st.push({node->left, 1});
+            }
+            else if(num == 2){
+                in.push_back(node->val);
+                num++;
+                st.push({node, num});
+                if(node->right) st.push({node->right, 1});
+            }
+            else{
+                post.push_back(node->val);
+            }
+        }
+        return post;
+    }
 };
