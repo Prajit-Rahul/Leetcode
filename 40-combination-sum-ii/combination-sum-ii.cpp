@@ -1,22 +1,25 @@
 class Solution {
 public:
-    vector<vector<int>> ans;
-    void recc(vector<int>& candidates, int target, int ind, vector<int> &temp){
-        if(target <= 0 || ind >= candidates.size()){
-            if(target == 0) ans.push_back(temp);
+    void recc(vector<int>& candidates, int target, vector<int>& temp, vector<vector<int>> &ans, int ind){
+        if(target == 0){
+            ans.push_back(temp);
             return;
         }
-        for(int j=ind; j<candidates.size(); j++){
-            if(j > ind && candidates[j] == candidates[j-1]) continue;
-            temp.push_back(candidates[j]);
-            recc(candidates, target-candidates[j], j+1, temp);
-            temp.pop_back();
+        for(int i=ind; i<candidates.size(); i++){
+            if(i > ind && candidates[i-1] == candidates[i]) continue;
+                if(target-candidates[i]>=0){
+                    temp.push_back(candidates[i]);
+                    recc(candidates, target-candidates[i], temp, ans, i+1);
+                    temp.pop_back();
+                }
+            
         }
     }
     vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
         sort(candidates.begin(), candidates.end());
         vector<int> temp;
-        recc(candidates, target, 0, temp);
+        vector<vector<int>> ans;
+        recc(candidates, target, temp, ans, 0);
         return ans;
     }
 };
