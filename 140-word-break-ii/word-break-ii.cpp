@@ -1,34 +1,35 @@
 class Solution {
 public:
-    vector<string> ans;
-    void recc(string &s, unordered_set<string> &st, int ind, vector<string> &temp){
+    unordered_map<int, vector<string>> dp;
+    vector<string> recc(string &s, unordered_set<string> &st, int ind){
+        if(dp.count(ind)) return dp[ind];
+        vector<string> res;
         if(ind == s.length()){
-            string res = "";
-            for(auto &it: temp){
-                res += it + " ";
-            }
-            res.pop_back();
-            ans.push_back(res);
-            return;
+            res.push_back("");
+            return dp[ind] = res;
         }
-        // if(dp[ind] != -1) return dp[ind];
-        for(int i=ind; i<s.length();i++){
-            if(st.count(s.substr(ind, i-ind+1)) > 0){
-                temp.push_back(s.substr(ind, i-ind+1));
-                recc(s, st, i+1, temp);
-                temp.pop_back();
+        for(int i=ind; i<s.length(); i++){
+            string word = s.substr(ind, i-ind+1);
+            if(st.count(word)){
+                vector<string> suffix = recc(s, st, i+1);
+
+                for(auto &sentence: suffix){
+                    if(sentence == ""){
+                        res.push_back(word);
+                    }
+                    else{
+                        res.push_back(word + " " + sentence);
+                    }
+                }
             }
         }
+        return dp[ind] = res;
     }
     vector<string> wordBreak(string s, vector<string>& wordDict) {
-
         unordered_set<string> st;
         for(auto &it: wordDict){
             st.insert(it);
         }
-        vector<string> temp;
-        vector<int> dp(s.length(), -1);
-        recc(s, st, 0, temp);
-        return ans;
+        return recc(s, st, 0);
     }
 };
