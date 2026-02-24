@@ -8,6 +8,7 @@ public:
             vis[i] = true;
             if(recc(nums, k, i+1, curr_sum+nums[i], sum, vis)) return true;   
             vis[i] = false;
+            if(curr_sum == 0) break;
         }
         return false;
     }
