@@ -5,10 +5,11 @@ public:
             return side[0] == side[1] && side[1] == side[2] && side[2] == side[3];
         }
         for(int i=0; i<4; i++){
-            if(side[i] + matchsticks[ind] > length) continue;
+            if(side[i] + matchsticks[ind] <= length){
             side[i] += matchsticks[ind];
             if(recc(matchsticks, ind+1, side, length)) return true;
             side[i] -= matchsticks[ind];
+            }
         }
         return false;
     }
