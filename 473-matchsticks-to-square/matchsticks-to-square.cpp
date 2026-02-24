@@ -10,6 +10,8 @@ public:
             if(recc(matchsticks, ind+1, side, length)) return true;
             side[i] -= matchsticks[ind];
             }
+            if(side[i] == 0)
+                break;
         }
         return false;
     }
