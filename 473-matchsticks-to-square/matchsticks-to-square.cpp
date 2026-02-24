@@ -22,6 +22,7 @@ public:
         if(sum % 4 != 0) return false;
         sum /= 4;
         sort(matchsticks.begin(), matchsticks.end(), greater<int>());
+        if(sum < matchsticks[0]) return false;
         return recc(matchsticks, 0, side, sum);
     }
 };
