@@ -1,15 +1,16 @@
 class Solution {
 public:
     int dfs(vector<vector<int>> &grid, int i, int j){
-        if(i < 0 || j < 0 || i >= grid.size() || j >= grid[0].size() || grid[i][j] == 0) return 1;
-        if(grid[i][j] == 2) return 0;
-        grid[i][j] = 2;
-        int n = 0;
-        n += dfs(grid, i+1, j);
-        n += dfs(grid, i, j+1);
-        n += dfs(grid, i, j-1);
-        n += dfs(grid, i-1, j);
-        return n;
+        int count = 4;
+        if(j > 0 && grid[i][j-1] == 1) 
+            count--;
+        if(i > 0 && grid[i-1][j] == 1)
+            count--;
+        if(i+1 < grid.size() && grid[i+1][j] == 1) 
+            count--;
+        if(j+1 < grid[0].size() && grid[i][j+1] == 1) 
+            count--;
+        return count;
     }
     int islandPerimeter(vector<vector<int>>& grid) {
         int n = grid.size();
@@ -19,7 +20,6 @@ public:
             for(int j=0; j<m; j++){
                 if(grid[i][j] == 1){
                     count += dfs(grid, i, j);
-                    break;
                 }
             }
         }
