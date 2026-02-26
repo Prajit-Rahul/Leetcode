@@ -7,20 +7,20 @@ public:
         }
         stack<string> st;
         st.push("JFK");
-        vector<string> ans;
+        vector<string> res;
         while(!st.empty()){
             string node = st.top();
             if(mp[node].size() == 0){
-                ans.push_back(node);
+                res.push_back(node);
                 st.pop();
             }
             else{
-                auto dst = mp[node].begin();
-                st.push(*dst);
-                mp[node].erase(dst);
+                auto nxt = mp[node].begin();
+                st.push(*nxt);
+                mp[node].erase(nxt);
             }
         }
-        reverse(ans.begin(), ans.end());
-        return ans;
+        reverse(res.begin(), res.end());
+        return res;
     }
 };
