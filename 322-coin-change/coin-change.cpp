@@ -1,23 +1,37 @@
 class Solution {
 public: 
-    int recc(vector<int>& coins, int amount, int ind, vector<vector<int>> &dp){
-        if(ind == 0){
-            if(amount % coins[0] == 0) 
-                return amount / coins[0];
-            return INT_MAX;
-        }
-        if(dp[ind][amount] != -1) return dp[ind][amount];
-        int take = INT_MAX;
-        if(amount - coins[ind] >= 0)
-            take = recc(coins, amount - coins[ind], ind, dp);
-        if(take != INT_MAX) take += 1;
-        int ntake = recc(coins, amount, ind-1, dp);
-        return dp[ind][amount] = min(take, ntake);
-    }
+    // int recc(vector<int>& coins, int amount, int ind, vector<vector<int>> &dp){
+    //     if(ind == 0){
+    //         if(amount % coins[0] == 0) 
+    //             return amount / coins[0];
+    //         return INT_MAX;
+    //     }
+    //     if(dp[ind][amount] != -1) return dp[ind][amount];
+    //     int take = INT_MAX;
+    //     if(amount - coins[ind] >= 0)
+    //         take = recc(coins, amount - coins[ind], ind, dp);
+    //     if(take != INT_MAX) take += 1;
+    //     int ntake = recc(coins, amount, ind-1, dp);
+    //     return dp[ind][amount] = min(take, ntake);
+    // }
     int coinChange(vector<int>& coins, int amount) {
         int n = coins.size();
-        vector<vector<int>> dp(n+1, vector<int>(amount+1, -1));
-        int ans = recc(coins, amount, n-1, dp);
+        vector<vector<int>> dp(n+1, vector<int>(amount+1, 0));
+        for(int i=0; i<=amount; i++){
+            if(i%coins[0] == 0) dp[0][i] = i/coins[0];
+            else dp[0][i] = INT_MAX;
+        }
+        for(int ind = 1; ind <n; ind++){
+            for(int amt=1; amt<=amount; amt++){
+                int take = INT_MAX;
+                if(amt - coins[ind] >= 0)
+                    take = dp[ind][amt - coins[ind]];
+                if(take != INT_MAX) take += 1;
+                int ntake = dp[ind-1][amt];
+                dp[ind][amt] = min(take, ntake);
+            }
+        }
+        int ans = dp[n-1][amount];
         return ans == INT_MAX?-1:ans;
     }
     // int recc(vector<int> &coins, int amount, int ind, vector<vector<int>> &dp){
