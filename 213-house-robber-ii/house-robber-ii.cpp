@@ -19,15 +19,27 @@ public:
     //     int res2 = recc(nums, nums.size()-1, dp2);
     //     return max(res1, res2);
     // }
+    // int recc(vector<int> &nums, int l, int r){
+    //     vector<int> dp(nums.size(), 0);
+    //     for(int ind=l; ind<=r; ind++){
+    //         int take = (ind-1>=0)?dp[ind-1]:0;
+    //         int ntake = (ind-2>=0)?dp[ind-2]:0;
+    //         ntake += nums[ind];
+    //         dp[ind] = max(take, ntake);
+    //     }
+    //     return dp[r];
+    // }
     int recc(vector<int> &nums, int l, int r){
-        vector<int> dp(nums.size(), 0);
+        int prev1 = 0, prev2 = 0, curr = 0;
         for(int ind=l; ind<=r; ind++){
-            int take = (ind-1>=0)?dp[ind-1]:0;
-            int ntake = (ind-2>=0)?dp[ind-2]:0;
+            int take = (ind-1>=0)?prev1:0;
+            int ntake = (ind-2>=0)?prev2:0;
             ntake += nums[ind];
-            dp[ind] = max(take, ntake);
+            curr = max(take, ntake);
+            prev2 = prev1;
+            prev1 = curr;
         }
-        return dp[r];
+        return prev1;
     }
     int rob(vector<int>& nums) {
         if(nums.size() == 1) return nums[0];
