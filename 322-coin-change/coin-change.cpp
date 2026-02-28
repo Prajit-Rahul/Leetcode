@@ -1,6 +1,24 @@
 class Solution {
 public: 
-
+    int recc(vector<int>& coins, int amount, int ind, vector<vector<int>> &dp){
+        if(ind < 0){
+            if(amount == 0) return 0;
+            return INT_MAX;
+        }
+        if(dp[ind][amount] != -1) return dp[ind][amount];
+        int take = INT_MAX;
+        if(amount - coins[ind] >= 0)
+            take = recc(coins, amount - coins[ind], ind, dp);
+        if(take != INT_MAX) take += 1;
+        int ntake = recc(coins, amount, ind-1, dp);
+        return dp[ind][amount] = min(take, ntake);
+    }
+    int coinChange(vector<int>& coins, int amount) {
+        int n = coins.size();
+        vector<vector<int>> dp(n+1, vector<int>(amount+1, -1));
+        int ans = recc(coins, amount, n-1, dp);
+        return ans == INT_MAX?-1:ans;
+    }
     // int recc(vector<int> &coins, int amount, int ind, vector<vector<int>> &dp){
     //     if(ind == 0){
     //         if(amount % coins[0] == 0) return amount/coins[0];
@@ -57,22 +75,22 @@ public:
     //     }
     //     return curr[amount] >= 1e9?-1:curr[amount];
     // }
-    int recc(vector<int>& coins, int amount, vector<int> &dp){
-        if(amount == 0) return 0;
-        if(dp[amount] != -1) return dp[amount];
-        int res = 1e9;
-        for(auto &it: coins){
-            if(it <= amount){
-                res = min(res, 1+recc(coins, amount-it, dp));
-            }
-        }
-        return dp[amount] = res;
-    }
-    int coinChange(vector<int>& coins, int amount) {
-        int n = coins.size();
-        const int INF = 1e9;
-        vector<int> dp(amount+1, -1);
-        int res = recc(coins, amount, dp);
-        return res>=INF?-1:res;
-    }
+    // int recc(vector<int>& coins, int amount, vector<int> &dp){
+    //     if(amount == 0) return 0;
+    //     if(dp[amount] != -1) return dp[amount];
+    //     int res = 1e9;
+    //     for(auto &it: coins){
+    //         if(it <= amount){
+    //             res = min(res, 1+recc(coins, amount-it, dp));
+    //         }
+    //     }
+    //     return dp[amount] = res;
+    // }
+    // int coinChange(vector<int>& coins, int amount) {
+    //     int n = coins.size();
+    //     const int INF = 1e9;
+    //     vector<int> dp(amount+1, -1);
+    //     int res = recc(coins, amount, dp);
+    //     return res>=INF?-1:res;
+    // }
 };
