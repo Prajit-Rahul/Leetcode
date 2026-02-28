@@ -14,26 +14,24 @@ public:
     //     int ntake = recc(coins, amount, ind-1, dp);
     //     return dp[ind][amount] = min(take, ntake);
     // }
+    int recc(vector<int>& coins, int amount, vector<int> &dp){
+        if(amount == 0){
+            return 0;
+        }
+        if(dp[amount] != -1) return dp[amount];
+        int mini = 1e9;
+        for(auto &coin: coins){
+            if(amount - coin >= 0){
+                mini = min(mini, 1 + recc(coins, amount - coin, dp));
+            }
+        }
+        return dp[amount] = mini;
+    }
     int coinChange(vector<int>& coins, int amount) {
         int n = coins.size();
-        vector<int> prev(amount+1, 0), curr(amount+1, 0);
-        for(int i=0; i<=amount; i++){
-            if(i%coins[0] == 0) prev[i] = i/coins[0];
-            else prev[i] = INT_MAX;
-        }
-        for(int ind = 1; ind <n; ind++){
-            for(int amt=1; amt<=amount; amt++){
-                int take = INT_MAX;
-                if(amt - coins[ind] >= 0)
-                    take = curr[amt - coins[ind]];
-                if(take != INT_MAX) take += 1;
-                int ntake = prev[amt];
-                curr[amt] = min(take, ntake);
-            }
-            prev = curr;
-        }
-        int ans = prev[amount];
-        return ans == INT_MAX?-1:ans;
+        vector<int> dp(amount+1, -1);
+        int ans = recc(coins, amount, dp);
+        return ans >= 1e9?-1:ans;
     }
     // int recc(vector<int> &coins, int amount, int ind, vector<vector<int>> &dp){
     //     if(ind == 0){
