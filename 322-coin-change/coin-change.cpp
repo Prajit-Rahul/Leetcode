@@ -1,8 +1,9 @@
 class Solution {
 public: 
     int recc(vector<int>& coins, int amount, int ind, vector<vector<int>> &dp){
-        if(ind < 0){
-            if(amount == 0) return 0;
+        if(ind == 0){
+            if(amount % coins[0] == 0) 
+                return amount / coins[0];
             return INT_MAX;
         }
         if(dp[ind][amount] != -1) return dp[ind][amount];
