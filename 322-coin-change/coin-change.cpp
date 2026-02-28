@@ -16,22 +16,23 @@ public:
     // }
     int coinChange(vector<int>& coins, int amount) {
         int n = coins.size();
-        vector<vector<int>> dp(n+1, vector<int>(amount+1, 0));
+        vector<int> prev(amount+1, 0), curr(amount+1, 0);
         for(int i=0; i<=amount; i++){
-            if(i%coins[0] == 0) dp[0][i] = i/coins[0];
-            else dp[0][i] = INT_MAX;
+            if(i%coins[0] == 0) prev[i] = i/coins[0];
+            else prev[i] = INT_MAX;
         }
         for(int ind = 1; ind <n; ind++){
             for(int amt=1; amt<=amount; amt++){
                 int take = INT_MAX;
                 if(amt - coins[ind] >= 0)
-                    take = dp[ind][amt - coins[ind]];
+                    take = curr[amt - coins[ind]];
                 if(take != INT_MAX) take += 1;
-                int ntake = dp[ind-1][amt];
-                dp[ind][amt] = min(take, ntake);
+                int ntake = prev[amt];
+                curr[amt] = min(take, ntake);
             }
+            prev = curr;
         }
-        int ans = dp[n-1][amount];
+        int ans = prev[amount];
         return ans == INT_MAX?-1:ans;
     }
     // int recc(vector<int> &coins, int amount, int ind, vector<vector<int>> &dp){
