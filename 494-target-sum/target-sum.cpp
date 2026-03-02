@@ -1,8 +1,11 @@
 class Solution {
 public:
     int recc(vector<int>& nums, int sum, int ind, vector<vector<int>> &dp){
-        if(ind < 0){
-            if(sum == 0) return 1;
+        if(ind == 0){
+            if(sum == nums[ind] || sum == 0){
+                if(nums[ind] == 0) return 2;
+                return 1;
+            }
             return 0;
         }
         if(dp[ind][sum] != -1) return dp[ind][sum];
