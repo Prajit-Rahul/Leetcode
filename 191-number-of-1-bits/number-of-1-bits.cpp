@@ -8,11 +8,19 @@ public:
     //     }
     //     return sum;
     // }
+    // int hammingWeight(int n) {
+    //     int sum = 0;
+    //     while(n>0){
+    //         sum += (n % 2);
+    //         n>>=1;
+    //     }
+    //     return sum;
+    // }
     int hammingWeight(int n) {
         int sum = 0;
         while(n>0){
-            sum += (n % 2);
-            n>>=1;
+            n = n & (n-1);
+            sum++;
         }
         return sum;
     }
