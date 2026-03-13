@@ -2,24 +2,26 @@ class Solution {
 public:
     string multiply(string num1, string num2) {
         if(num1 == "0" || num2 == "0") return "0";
-        int n = num1.size(), m = num2.size();
-        vector<int> res(n + m, 0);
         reverse(num1.begin(), num1.end());
         reverse(num2.begin(), num2.end());
+        int n = num1.length(), m = num2.length();
+        vector<int> arr(n+m, 0);
         for(int i=0; i<n; i++){
-            int a = num1[i] - '0';
+            int d1 = num1[i] - '0';
             for(int j=0; j<m; j++){
-                int b = num2[j] - '0';
-                res[i + j] += a * b;
-                res[i + j + 1] += res[i + j] / 10;
-                res[i + j] %= 10;
+                int d2 = num2[j] - '0';
+                arr[i+j] += d1*d2;
+                if(arr[i+j] >= 10){
+                    arr[i+j+1] +=  arr[i+j]/10;
+                    arr[i+j] %= 10;
+                }
             }
         }
-        if(res.size() > 1 && res.back() == 0) res.pop_back();
-        reverse(res.begin(), res.end());
-        string ans;
-        for(auto it: res){
-            ans += it+'0';
+        string ans = "";
+        int i = n+m-1;
+        while(i>=0 && arr[i] == 0)i--;
+        for(;i>=0 ; i--){
+            ans.push_back(arr[i]+'0');
         }
         return ans;
     }
