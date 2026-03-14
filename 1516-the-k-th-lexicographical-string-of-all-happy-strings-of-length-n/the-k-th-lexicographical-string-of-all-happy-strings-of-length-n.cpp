@@ -1,35 +1,27 @@
 class Solution {
 public:
-    string ans = "";
-    int count = 0;
-    void recc(int n, string &s, char prev){
-        if(count == 0) return;
+    bool recc(int n, string &s, char prev, string &ans, int &k){
         if(n == 0){
-            count--;
-            if(count == 0) ans = s;
-            return;
+            k--;
+            if(k == 0){
+                ans = s;
+                return true;
+            }
+            return false;
         }
-        n--;
-        if(prev != 'a'){
-            s.push_back('a');
-            recc(n, s, 'a');
-            s.pop_back();
+        for(char c: {'a', 'b', 'c'}){
+            if(prev != c){
+                s.push_back(c);
+                if(recc(n-1, s, c, ans, k)) return true;
+                s.pop_back();
+            }
         }
-        if(prev != 'b'){
-            s.push_back('b');
-            recc(n, s, 'b');
-            s.pop_back();
-        }
-        if(prev != 'c'){
-            s.push_back('c');
-            recc(n, s, 'c');
-            s.pop_back();
-        }
+        return false;
     }
     string getHappyString(int n, int k) {
         string s = "";
-        count = k;
-        recc(n, s, ' ');
+        string ans = "";
+        recc(n, s, ' ', ans, k);
         return ans;
     }
 };
