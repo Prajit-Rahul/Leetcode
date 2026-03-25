@@ -2,20 +2,31 @@ class Solution {
 public:
     bool canPartitionGrid(vector<vector<int>>& grid) {
         int n = grid.size(), m = grid[0].size();
-        vector<vector<long long>> preSum(n, vector<long long>(m, 0));
+        long long sum = 0;
         for(int i=0; i<n; i++){
             for(int j=0; j<m; j++){
-                preSum[i][j] += grid[i][j];
-                if(i>0) preSum[i][j] += preSum[i-1][j];
-                if(j>0) preSum[i][j] += preSum[i][j-1];
-                if(i>0 && j>0) preSum[i][j] -= preSum[i-1][j-1];
+                sum += grid[i][j];
             }
         }
+        if(sum%2 == 1) return false;
+        long long target = sum/2;
+        long long s = 0;
         for(int i=0; i<n-1; i++){
-            if(preSum[i][m-1] * 2 == preSum[n-1][m-1]) return true;
+            long long curr = 0;
+            for(int j=0; j<m; j++){
+                curr += grid[i][j];
+            }
+            s += curr;
+            if(s == target) return true;
         }
+        s = 0;
         for(int j=0; j<m-1; j++){
-            if(preSum[n-1][j] * 2 == preSum[n-1][m-1]) return true;
+            long long curr = 0;
+            for(int i=0; i<n; i++){
+                curr += grid[i][j];
+            }
+            s += curr;
+            if(s == target) return true;
         }
         return false;
     }
