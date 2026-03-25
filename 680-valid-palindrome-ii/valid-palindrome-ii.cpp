@@ -1,21 +1,21 @@
 class Solution {
 public:
-    bool isPal(string &nums, int l, int r){
-        while(l<=r){
-            if(nums[l] != nums[r]) return false;
-                l++, r--;
+    bool isPal(string &s, int i, int j){
+        while(i<=j){
+            if(s[i] != s[j]) return false;
+            i++, j--;
         }
         return true;
     }
-    bool validPalindrome(string nums) {
-        int l = 0, r = nums.length()-1;
-        bool flag = true;
-        while(l<=r){
-            if(nums[l] == nums[r]){
-                l++, r--;
+    bool validPalindrome(string s) {
+        bool flag = false;
+        int i=0, j=s.length()-1;
+        while(i<=j){
+            if(s[i] == s[j]){
+                i++, j--;
             }
-            else if(nums[l] == nums[r-1] || nums[l+1] == nums[r]){
-                return isPal(nums, l, r-1) || isPal(nums, l+1, r);
+            else if(s[i+1] == s[j] || s[i] == s[j-1]){
+                return isPal(s, i+1, j) || isPal(s, i, j-1);
             }
             else{
                 return false;
