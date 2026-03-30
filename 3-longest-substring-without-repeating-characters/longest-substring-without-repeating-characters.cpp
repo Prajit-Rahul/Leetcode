@@ -1,50 +1,17 @@
 class Solution {
 public:
-    // int lengthOfLongestSubstring(string s) {
-    //     int l = 0, r = 0, maxLen = 0;
-    //     int n = s.length();
-    //     unordered_map<char, int> mp;
-    //     while(r<n){
-    //         if(mp.find(s[r]) == mp.end()){
-    //             mp[s[r]]++;
-    //         }
-    //         else{
-    //             while(mp[s[r]] > 0){
-    //                 mp.erase(s[l]);
-    //                 l++;
-    //             }
-    //             mp[s[r]]++;
-    //         }
-    //         maxLen = max(maxLen, r - l + 1);
-    //         r++;
-    //     }
-    //     return maxLen;
-    // }
-    // int lengthOfLongestSubstring(string s) {
-    //     int l = 0, r = 0, maxLen = 0;
-    //     int n = s.length();
-    //     unordered_map<char, int> mp;
-    //     while(r<n){
-    //         if(mp.find(s[r]) != mp.end()){
-    //             l =  max(l, mp[s[r]] + 1);
-    //         }
-    //         mp[s[r]] = r;
-    //         maxLen = max(maxLen, r - l + 1);
-    //         r++;
-    //     }
-    //     return maxLen;
-    // }
     int lengthOfLongestSubstring(string s) {
-        int l = 0, r = 0, n = s.length(), ans = 0;
-        unordered_map<char,int> mp;
+        int l = 0, r = 0, n = s.length();
+        int maxi = 0;
+        unordered_map<char, int> mp;
         while(r<n){
             if(mp.find(s[r]) != mp.end()){
                 l = max(l, mp[s[r]]+1);
             }
-            ans = max(ans, r-l+1);
+            maxi = max(maxi, r - l + 1);
             mp[s[r]] = r;
             r++;
-        }        
-        return ans;
+        }
+        return maxi;
     }
 };
