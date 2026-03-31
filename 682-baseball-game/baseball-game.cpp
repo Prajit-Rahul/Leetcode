@@ -1,33 +1,39 @@
 class Solution {
 public:
     int calPoints(vector<string>& operations) {
-        stack<int> st;
+        stack<int> q;
+        int n = operations.size();
         for(auto &it: operations){
-            if(it == "C" && !st.empty()){
-                st.pop();
+            if (it != "C" && it != "D" && it != "+"){
+                q.push(stoi(it));
             }
-            else if(it == "D" && !st.empty()){
-                int num = st.top()*2;
-                st.push(num);
+            else if(it == "C"){
+                if(!q.empty()) q.pop();
             }
-            else if(it == "+" && st.size() > 1){
-                int num1 = st.top();
-                st.pop();
-                int num2 = st.top();
-                st.pop();
-                st.push(num2);
-                st.push(num1);
-                st.push(num1+num2);
-                
+            else if(it == "D"){
+                if(!q.empty()){
+                    int num = q.top();
+                    q.push(num*2);
+                }
             }
-            else if(it != "D" || it != "C"){
-                st.push(stoi(it));
+            else if(it == "+"){
+                int num1 = 0, num2 = 0;
+                if(!q.empty()){
+                    num1 = q.top();
+                    q.pop();
+                }
+                if(!q.empty()){
+                    num2 = q.top();
+                }
+                q.push(num1);
+                q.push(num1+num2);
             }
         }
+
         int ans = 0;
-        while(!st.empty()){
-            ans += st.top();
-            st.pop();
+        while(!q.empty()){
+            ans += q.top();
+            q.pop();
         }
         return ans;
     }
